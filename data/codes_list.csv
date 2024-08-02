@@ -1,0 +1,13 @@
+country_codes,hdx_endpoints,metadata_endpoints
+AFG,coordination-context/operational-presence,metadata/dataset
+COL,coordination-context/funding,metadata/resource
+DRC,coordination-context/conflict-event,metadata/location
+SSD,coordination-context/national-risk,metadata/admin1
+SYR,food/food-security,metadata/admin2
+UKR,food/food-price,metadata/currency
+YEM,affected-people/refugees,metadata/org
+,affected-people/humanitarian-needs,metadata/org-type
+,population-social/population,metadata/sector
+,population-social/poverty-rate,metadata/wfp-commodity
+,,metadata/wfp-market
+,,util/version

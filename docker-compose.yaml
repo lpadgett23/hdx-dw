@@ -1,0 +1,23 @@
+services:
+  postgres:
+    image: postgres:15
+    container_name: hdx_postgres
+    restart: always
+    shm_size: 128mb
+    volumes:
+      - postgres_data_hdx:/var/lib/posgresql/data
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: hdx_dw
+    ports:
+      - "5432:5432"
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - "8080:8080"
+
+volumes:
+  postgres_data_hdx: {}  # a named vol needs to be correctly defined as an empty object
