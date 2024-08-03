@@ -1,0 +1,308 @@
+Project hdx_dw {
+    database_type: 'PostgreSQL'
+    Note: 'Data models for Humanitarian Data Exchange API (HDX HAPI) data warehouse'
+}
+
+Table metadata.dataset {
+    dataset_hdx_id integer [pk]
+    dataset_hdx_stub varchar
+    dataset_hdx_title varchar	
+    hdx_provider_stub varchar
+    hdx_provider_name varchar
+    hdx_link varchar
+    hdx_api_link varchar
+    provider_hdx_link varchar
+}
+
+Table metadata.resource {
+    resource_hdx_id integer [pk] 
+    dataset_hdx_id integer [ref: > metadata.dataset.dataset_hdx_id]
+    name varchar
+    update_date datetime
+    is_hxl boolean
+    download_url varchar
+    hapi_updated_date datetime
+    dataset_hdx_stub varchar
+    dataset_hdx_title varchar
+    dataset_hdx_provider_stub varchar
+    dataset_hdx_provider_name varchar
+    hdx_link varchar
+    hdx_api_link varchar
+    dataset_hdx_link varchar
+    dataset_hdx_api_link varchar
+    provider_hdx_link varchar
+    provider_hdx_api_link varchar
+}
+
+Table metadata.location {
+    id integer [pk]
+    code varchar
+    name varchar	
+    from_cods boolean		
+    has_hrp boolean
+    in_gho boolean
+    reference_period_start datetime
+    reference_period_end datetime
+}
+
+Table metadata.admin1 {
+    id integer [pk]
+    location_ref varchar [ref: - metadata.location.id]
+    code varchar
+    name varchar
+    from_cods boolean
+    location_code varchar
+    location_name varchar
+    reference_period_start datetime
+    reference_period_end datetime
+}
+
+Table metadata.admin2 {
+    id integer [pk]
+    admin1_ref varchar [ref: > metadata.admin1.id]
+    code varchar
+    name varchar
+    from_cods boolean
+    location_ref varchar
+    admin1_code varchar
+    admin1_name varchar
+    location_code varchar
+    location_name varchar
+    reference_period_start datetime
+    reference_period_end datetime
+}
+
+Table metadata.Currency {
+    code integer [pk]
+    name varchar
+}
+
+Table metadata.org {
+    acronym varchar 
+    name varchar	
+    org_type_code integer
+    org_type_description varchar
+}
+
+Table metadata.org_type {
+    Code varchar 
+    Description varchar
+}
+
+Table metadata.sector {
+    code varchar 
+    name varchar
+}
+
+Table metadata.commodity {
+    code varchar [pk]
+    name varchar
+    category varchar
+}
+
+Table metadata.wfp_market {
+    code varchar [pk]
+    name varchar
+    lat float
+    lon float
+    location_code varchar
+    location_name varchar
+    admin1_ref varchar
+    admin1_name varchar
+    admin2_ref varchar
+    admin2_code varchar
+    admin2_name varchar
+}
+
+Table hdx.food_security {
+    resource_hdx_id integer [pk]
+    admin2_ref varchar
+    ipc_phase varchar
+    ipc_type varchar
+    population_in_phase integer
+    population_fraction_in_phase integer
+    reference_period_start datetime
+    location_code varchar
+    location_name varchar
+    admin1_code varchar
+    admin1_name varchar
+    location_ref varchar
+    admin2_code varchar
+    admin2_name varchar
+    admin1_ref varchar
+}
+
+Table hdx.food_prices {
+    resource_hdx_id integer [pk]
+    market_code integer
+    market_name varchar
+    commodity_code varchar
+    commodity_name varchar
+    commodity_category varchar
+    price_flag varchar
+    price_type varchar
+    price float
+    unit varchar
+    currency_code integer
+    lat float
+    lon float
+    reference_period_start datetime
+    reference_period_end datetime
+    location_ref varchar
+    location_code varchar
+    location_name varchar
+    admin1_ref varchar
+    admin1_code varchar
+    admin1_name varchar
+    admin2_ref varchar
+    admin2_code varchar
+    admin2_name varchar
+}
+
+Table hdx.refugees {
+    resource_hdx_id integer [pk]
+    origin_location_ref varchar
+    asylum_location_ref varchar
+    population_group varchar
+    gender varchar
+    age_range varchar
+    min_age integer
+    max_age integer
+    population integer
+    reference_period_start datetime
+    reference_period_end datetime
+    origin_location_code varchar
+    origin_location_name varchar
+    asylum_location_code varchar
+    asylum_location_name varchar
+}
+
+Table hdx.humanitarian_needs {
+    resource_hdx_id integer [pk]
+    admin2_ref varchar
+    gender varchar
+    age_range varchar
+    min_age	 integer
+    max_age integer
+    disabled_marker varchar
+    sector_code varchar
+    population_group varchar
+    population_status varchar
+    population integer
+    reference_period_start datetime
+    reference_period_end datetime
+    sector_name varchar
+    location_code varchar
+    location_name varchar
+    location_ref varchar
+    admin1_code varchar
+    admin1_name varchar
+    admin2_code varchar
+    admin2_name varchar
+    admin1_ref varchar
+}
+
+Table hdx.Coordination3ws {
+    sector_code varchar [ref: - metadata.sector.code]
+    resource_hdx_id integer [ref: > metadata.resource.resource_hdx_id]
+    org_acronym varchar [ref: - metadata.org.acronym]
+    org_name varchar [ref: - metadata.org.name]
+    org_type_code varchar [ref: - metadata.org.org_type_code]
+    org_type_description varchar [ref: - metadata.org.org_type_description]
+    sector_name varchar [ref: - metadata.sector.name]
+    location_ref varchar [ref: - metadata.location.id]
+    location_code varchar [ref: - metadata.location.code]
+    location_name varchar [ref: - metadata.location.name]	
+    reference_period_start datetime
+    reference_period_end datetime
+    admin1_ref varchar [ref: - metadata.admin1.id]
+    admin1_code varchar [ref: - metadata.admin1.code]
+    admin1_name varchar [ref: - metadata.admin1.name]
+    admin2_ref varchar [ref: - metadata.admin2.id]	
+    admin2_code varchar [ref: - metadata.admin2.code]
+    admin2_name varchar [ref: - metadata.admin2.name]
+}
+
+Table hdx.funding {
+    resource_hdx_id	 nteger [pk]
+    appeal_code varchar
+    appeal_name varchar
+    appeal_type varchar
+    requirements_usd float
+    funding_usd	 float
+    funding_pct varchar
+    location_ref varchar
+    location_code varchar
+    location_name varchar
+    reference_period_start datetime
+    reference_period_end datetime
+}
+
+Table hdx.conflict_events {
+    event_type varchar
+    events varchar
+    fatalities	 integer
+    resource_hdx_id integer 
+    location_ref varchar
+    location_code varchar
+    location_name varchar
+    admin1_ref varchar
+    admin1_code varchar
+    admin1_name varchar
+    admin2_ref varchar
+    admin2_code varchar
+    admin2_name varchar
+    reference_period_start datetime	
+    reference_period_end datetime
+}
+
+Table hdx.national_risk {
+    risk_class varchar
+    global_rank integer
+    hazard_exposure_risk integer
+    vulnerability_risk integer
+    coping_capacity_risk integer
+    meta_missing_indicators_pct float
+    meta_avg_recentness_years integer
+    reference_period_start datetime
+    reference_period_end datetime
+    resource_hdx_id integer
+    location_code varchar
+    location_name varchar
+    location_ref varchar
+}
+
+Table hdx.baseline_population {
+    resource_hdx_id integer [pk]
+    admin2_ref varchar
+    gender varchar
+    age_range varchar
+    min_age integer
+    max_age integer
+    population integer	
+    reference_period_start datetime
+    reference_period_end datetime
+    location_ref varchar
+    location_code varchar
+    location_name varchar
+    admin1_ref varchar
+    admin1_code varchar
+    admin1_name varchar
+    admin2_code varchar
+    admin2_name varchar
+    }
+
+Table hdx.poverty_rate {
+    resource_hdx_id integer [pk]
+    admin1_name varchar
+    mpi float
+    headcount_ratio float
+    intensity_of_deprivation float
+    vulnerable_to_poverty float
+    in_severe_poverty float
+    reference_period_start datetime	
+    reference_period_end datetime
+    location_code varchar
+    location_name varchar
+    location_ref varchar
+}
