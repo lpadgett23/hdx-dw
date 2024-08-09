@@ -1,0 +1,930 @@
+version: 2.0.0
+
+type: DeclarativeSource
+
+check:
+  type: CheckStream
+  stream_names:
+    - refugees
+
+definitions:
+  streams:
+    refugees:
+      type: DeclarativeStream
+      name: refugees
+      retriever:
+        type: SimpleRetriever
+        requester:
+          $ref: '#/definitions/base_requester'
+          path: /api/v1/affected-people/refugees
+          http_method: GET
+        record_selector:
+          type: RecordSelector
+          extractor:
+            type: DpathExtractor
+            field_path: []
+        paginator:
+          type: DefaultPaginator
+          page_token_option:
+            type: RequestOption
+            inject_into: request_parameter
+            field_name: offset
+          page_size_option:
+            type: RequestOption
+            inject_into: request_parameter
+            field_name: limit
+          pagination_strategy:
+            type: OffsetIncrement
+            page_size: 10000
+      schema_loader:
+        type: InlineSchemaLoader
+        schema:
+          $ref: '#/schemas/refugees'
+    hno_humanitarian_needs:
+      type: DeclarativeStream
+      name: hno_humanitarian_needs
+      retriever:
+        type: SimpleRetriever
+        requester:
+          $ref: '#/definitions/base_requester'
+          path: /api/v1/affected-people/humanitarian-needs
+          http_method: GET
+        record_selector:
+          type: RecordSelector
+          extractor:
+            type: DpathExtractor
+            field_path: []
+        paginator:
+          type: DefaultPaginator
+          page_token_option:
+            type: RequestOption
+            inject_into: request_parameter
+            field_name: offset
+          page_size_option:
+            type: RequestOption
+            inject_into: request_parameter
+            field_name: limit
+          pagination_strategy:
+            type: OffsetIncrement
+            page_size: 10000
+      schema_loader:
+        type: InlineSchemaLoader
+        schema:
+          $ref: '#/schemas/hno_humanitarian_needs'
+    operational_presence_3ws:
+      type: DeclarativeStream
+      name: operational_presence_3ws
+      retriever:
+        type: SimpleRetriever
+        requester:
+          $ref: '#/definitions/base_requester'
+          path: /api/v1/coordination-context/operational-presence
+          http_method: GET
+        record_selector:
+          type: RecordSelector
+          extractor:
+            type: DpathExtractor
+            field_path: []
+        paginator:
+          type: DefaultPaginator
+          page_token_option:
+            type: RequestOption
+            inject_into: request_parameter
+            field_name: offset
+          page_size_option:
+            type: RequestOption
+            inject_into: request_parameter
+            field_name: limit
+          pagination_strategy:
+            type: OffsetIncrement
+            page_size: 10000
+      schema_loader:
+        type: InlineSchemaLoader
+        schema:
+          $ref: '#/schemas/operational_presence_3ws'
+    funding:
+      type: DeclarativeStream
+      name: funding
+      retriever:
+        type: SimpleRetriever
+        requester:
+          $ref: '#/definitions/base_requester'
+          path: /api/v1/coordination-context/funding
+          http_method: GET
+        record_selector:
+          type: RecordSelector
+          extractor:
+            type: DpathExtractor
+            field_path: []
+        paginator:
+          type: DefaultPaginator
+          page_token_option:
+            type: RequestOption
+            inject_into: request_parameter
+            field_name: offset
+          page_size_option:
+            type: RequestOption
+            inject_into: request_parameter
+            field_name: limit
+          pagination_strategy:
+            type: OffsetIncrement
+            page_size: 10000
+      schema_loader:
+        type: InlineSchemaLoader
+        schema:
+          $ref: '#/schemas/funding'
+    conflict_event:
+      type: DeclarativeStream
+      name: conflict_event
+      retriever:
+        type: SimpleRetriever
+        requester:
+          $ref: '#/definitions/base_requester'
+          path: /api/v1/coordination-context/conflict-event
+          http_method: GET
+        record_selector:
+          type: RecordSelector
+          extractor:
+            type: DpathExtractor
+            field_path: []
+        paginator:
+          type: DefaultPaginator
+          page_token_option:
+            type: RequestOption
+            inject_into: request_parameter
+            field_name: offset
+          page_size_option:
+            type: RequestOption
+            inject_into: request_parameter
+            field_name: limit
+          pagination_strategy:
+            type: OffsetIncrement
+            page_size: 10000
+      schema_loader:
+        type: InlineSchemaLoader
+        schema:
+          $ref: '#/schemas/conflict_event'
+    national_risk:
+      type: DeclarativeStream
+      name: national_risk
+      retriever:
+        type: SimpleRetriever
+        requester:
+          $ref: '#/definitions/base_requester'
+          path: /api/v1/coordination-context/national-risk
+          http_method: GET
+        record_selector:
+          type: RecordSelector
+          extractor:
+            type: DpathExtractor
+            field_path: []
+        paginator:
+          type: DefaultPaginator
+          page_token_option:
+            type: RequestOption
+            inject_into: request_parameter
+            field_name: offset
+          page_size_option:
+            type: RequestOption
+            inject_into: request_parameter
+            field_name: limit
+          pagination_strategy:
+            type: OffsetIncrement
+            page_size: 10000
+      schema_loader:
+        type: InlineSchemaLoader
+        schema:
+          $ref: '#/schemas/national_risk'
+    food_security:
+      type: DeclarativeStream
+      name: food_security
+      retriever:
+        type: SimpleRetriever
+        requester:
+          $ref: '#/definitions/base_requester'
+          path: /api/v1/food/food-security
+          http_method: GET
+        record_selector:
+          type: RecordSelector
+          extractor:
+            type: DpathExtractor
+            field_path: []
+        paginator:
+          type: DefaultPaginator
+          page_token_option:
+            type: RequestOption
+            inject_into: request_parameter
+            field_name: offset
+          page_size_option:
+            type: RequestOption
+            inject_into: request_parameter
+            field_name: limit
+          pagination_strategy:
+            type: OffsetIncrement
+            page_size: 10000
+      schema_loader:
+        type: InlineSchemaLoader
+        schema:
+          $ref: '#/schemas/food_security'
+    food_price:
+      type: DeclarativeStream
+      name: food_price
+      retriever:
+        type: SimpleRetriever
+        requester:
+          $ref: '#/definitions/base_requester'
+          path: /api/v1/food/food-price
+          http_method: GET
+        record_selector:
+          type: RecordSelector
+          extractor:
+            type: DpathExtractor
+            field_path: []
+        paginator:
+          type: DefaultPaginator
+          page_token_option:
+            type: RequestOption
+            inject_into: request_parameter
+            field_name: offset
+          page_size_option:
+            type: RequestOption
+            inject_into: request_parameter
+            field_name: limit
+          pagination_strategy:
+            type: OffsetIncrement
+            page_size: 10000
+      schema_loader:
+        type: InlineSchemaLoader
+        schema:
+          $ref: '#/schemas/food_price'
+    baseline_population:
+      type: DeclarativeStream
+      name: baseline_population
+      retriever:
+        type: SimpleRetriever
+        requester:
+          $ref: '#/definitions/base_requester'
+          path: /api/v1/population-social/population
+          http_method: GET
+        record_selector:
+          type: RecordSelector
+          extractor:
+            type: DpathExtractor
+            field_path: []
+        paginator:
+          type: DefaultPaginator
+          page_token_option:
+            type: RequestOption
+            inject_into: request_parameter
+            field_name: offset
+          page_size_option:
+            type: RequestOption
+            inject_into: request_parameter
+            field_name: limit
+          pagination_strategy:
+            type: OffsetIncrement
+            page_size: 10000
+      schema_loader:
+        type: InlineSchemaLoader
+        schema:
+          $ref: '#/schemas/baseline_population'
+    poverty_rate:
+      type: DeclarativeStream
+      name: poverty_rate
+      retriever:
+        type: SimpleRetriever
+        requester:
+          $ref: '#/definitions/base_requester'
+          path: /api/v1/population-social/poverty-rate
+          http_method: GET
+        record_selector:
+          type: RecordSelector
+          extractor:
+            type: DpathExtractor
+            field_path: []
+        paginator:
+          type: DefaultPaginator
+          page_token_option:
+            type: RequestOption
+            inject_into: request_parameter
+            field_name: offset
+          page_size_option:
+            type: RequestOption
+            inject_into: request_parameter
+            field_name: limit
+          pagination_strategy:
+            type: OffsetIncrement
+            page_size: 10000
+      schema_loader:
+        type: InlineSchemaLoader
+        schema:
+          $ref: '#/schemas/poverty_rate'
+  base_requester:
+    type: HttpRequester
+    url_base: https://hapi.humdata.org
+    authenticator:
+      type: ApiKeyAuthenticator
+      inject_into:
+        type: RequestOption
+        inject_into: header
+        field_name: X-HDX-HAPI-APP-IDENTIFIER
+      api_token: '{{ config["api_key"] }}'
+
+streams:
+  - $ref: '#/definitions/streams/refugees'
+  - $ref: '#/definitions/streams/hno_humanitarian_needs'
+  - $ref: '#/definitions/streams/operational_presence_3ws'
+  - $ref: '#/definitions/streams/funding'
+  - $ref: '#/definitions/streams/conflict_event'
+  - $ref: '#/definitions/streams/national_risk'
+  - $ref: '#/definitions/streams/food_security'
+  - $ref: '#/definitions/streams/food_price'
+  - $ref: '#/definitions/streams/baseline_population'
+  - $ref: '#/definitions/streams/poverty_rate'
+
+spec:
+  type: Spec
+  connection_specification:
+    type: object
+    $schema: http://json-schema.org/draft-07/schema#
+    required:
+      - api_key
+    properties:
+      api_key:
+        type: string
+        title: API Key
+        airbyte_secret: true
+        order: 0
+    additionalProperties: true
+
+metadata:
+  autoImportSchema:
+    refugees: true
+    hno_humanitarian_needs: true
+    operational_presence_3ws: true
+    funding: true
+    conflict_event: true
+    national_risk: true
+    food_security: true
+    food_price: true
+    baseline_population: true
+    poverty_rate: true
+
+schemas:
+  refugees:
+    type: object
+    $schema: http://json-schema.org/schema#
+    additionalProperties: true
+    properties:
+      data:
+        type:
+          - array
+          - 'null'
+        items:
+          type:
+            - object
+            - 'null'
+          properties:
+            age_range:
+              type:
+                - string
+                - 'null'
+            asylum_location_code:
+              type:
+                - string
+                - 'null'
+            asylum_location_name:
+              type:
+                - string
+                - 'null'
+            asylum_location_ref:
+              type:
+                - number
+                - 'null'
+            gender:
+              type:
+                - string
+                - 'null'
+            max_age:
+              type:
+                - number
+                - 'null'
+            min_age:
+              type:
+                - number
+                - 'null'
+            origin_location_code:
+              type:
+                - string
+                - 'null'
+            origin_location_name:
+              type:
+                - string
+                - 'null'
+            origin_location_ref:
+              type:
+                - number
+                - 'null'
+            population:
+              type:
+                - number
+                - 'null'
+            population_group:
+              type:
+                - string
+                - 'null'
+            reference_period_end:
+              type:
+                - string
+                - 'null'
+            reference_period_start:
+              type:
+                - string
+                - 'null'
+            resource_hdx_id:
+              type:
+                - string
+                - 'null'
+  hno_humanitarian_needs:
+    type: object
+    $schema: http://json-schema.org/schema#
+    additionalProperties: true
+    properties:
+      data:
+        type:
+          - array
+          - 'null'
+        items:
+          type:
+            - object
+            - 'null'
+          properties:
+            admin1_code:
+              type:
+                - string
+                - 'null'
+            admin1_name:
+              type:
+                - string
+                - 'null'
+            admin1_ref:
+              type:
+                - number
+                - 'null'
+            admin2_code:
+              type:
+                - string
+                - 'null'
+            admin2_name:
+              type:
+                - string
+                - 'null'
+            admin2_ref:
+              type:
+                - number
+                - 'null'
+            age_range:
+              type:
+                - string
+                - 'null'
+            disabled_marker:
+              type:
+                - string
+                - 'null'
+            gender:
+              type:
+                - string
+                - 'null'
+            location_code:
+              type:
+                - string
+                - 'null'
+            location_name:
+              type:
+                - string
+                - 'null'
+            location_ref:
+              type:
+                - number
+                - 'null'
+            max_age:
+              type:
+                - number
+                - 'null'
+            min_age:
+              type:
+                - number
+                - 'null'
+            population:
+              type:
+                - number
+                - 'null'
+            population_group:
+              type:
+                - string
+                - 'null'
+            population_status:
+              type:
+                - string
+                - 'null'
+            reference_period_end:
+              type:
+                - string
+                - 'null'
+            reference_period_start:
+              type:
+                - string
+                - 'null'
+            resource_hdx_id:
+              type:
+                - string
+                - 'null'
+            sector_code:
+              type:
+                - string
+                - 'null'
+            sector_name:
+              type:
+                - string
+                - 'null'
+  operational_presence_3ws:
+    type: object
+    $schema: http://json-schema.org/schema#
+    additionalProperties: true
+    properties:
+      data:
+        type:
+          - array
+          - 'null'
+        items:
+          type:
+            - object
+            - 'null'
+          properties:
+            admin1_code:
+              type:
+                - string
+                - 'null'
+            admin1_name:
+              type:
+                - string
+                - 'null'
+            admin1_ref:
+              type:
+                - number
+                - 'null'
+            admin2_code:
+              type:
+                - string
+                - 'null'
+            admin2_name:
+              type:
+                - string
+                - 'null'
+            admin2_ref:
+              type:
+                - number
+                - 'null'
+            location_code:
+              type:
+                - string
+                - 'null'
+            location_name:
+              type:
+                - string
+                - 'null'
+            location_ref:
+              type:
+                - number
+                - 'null'
+            org_acronym:
+              type:
+                - string
+                - 'null'
+            org_name:
+              type:
+                - string
+                - 'null'
+            org_type_code:
+              type:
+                - string
+                - 'null'
+            org_type_description:
+              type:
+                - string
+                - 'null'
+            reference_period_end:
+              type:
+                - string
+                - 'null'
+            reference_period_start:
+              type:
+                - string
+                - 'null'
+            resource_hdx_id:
+              type:
+                - string
+                - 'null'
+            sector_code:
+              type:
+                - string
+                - 'null'
+            sector_name:
+              type:
+                - string
+                - 'null'
+  funding:
+    type: object
+    $schema: http://json-schema.org/schema#
+    additionalProperties: true
+    properties:
+      data:
+        type:
+          - array
+          - 'null'
+        items:
+          type:
+            - object
+            - 'null'
+          properties:
+            appeal_code:
+              type:
+                - string
+                - 'null'
+            appeal_name:
+              type:
+                - string
+                - 'null'
+            appeal_type:
+              type:
+                - string
+                - 'null'
+            funding_pct:
+              type:
+                - number
+                - 'null'
+            funding_usd:
+              type:
+                - number
+                - 'null'
+            location_code:
+              type:
+                - string
+                - 'null'
+            location_name:
+              type:
+                - string
+                - 'null'
+            location_ref:
+              type:
+                - number
+                - 'null'
+            reference_period_end:
+              type:
+                - string
+                - 'null'
+            reference_period_start:
+              type:
+                - string
+                - 'null'
+            requirements_usd:
+              type:
+                - number
+                - 'null'
+            resource_hdx_id:
+              type:
+                - string
+                - 'null'
+  conflict_event:
+    type: object
+    $schema: http://json-schema.org/schema#
+    additionalProperties: true
+    properties:
+      data:
+        type:
+          - array
+          - 'null'
+        items:
+          type:
+            - object
+            - 'null'
+          properties:
+            admin1_code:
+              type:
+                - string
+                - 'null'
+            admin1_name:
+              type:
+                - string
+                - 'null'
+            admin1_ref:
+              type:
+                - number
+                - 'null'
+            admin2_code:
+              type:
+                - string
+                - 'null'
+            admin2_name:
+              type:
+                - string
+                - 'null'
+            admin2_ref:
+              type:
+                - number
+                - 'null'
+            event_type:
+              type:
+                - string
+                - 'null'
+            events:
+              type:
+                - number
+                - 'null'
+            fatalities:
+              type:
+                - number
+                - 'null'
+            location_code:
+              type:
+                - string
+                - 'null'
+            location_name:
+              type:
+                - string
+                - 'null'
+            location_ref:
+              type:
+                - number
+                - 'null'
+            reference_period_end:
+              type:
+                - string
+                - 'null'
+            reference_period_start:
+              type:
+                - string
+                - 'null'
+            resource_hdx_id:
+              type:
+                - string
+                - 'null'
+  national_risk:
+    type: object
+    $schema: http://json-schema.org/draft-07/schema#
+    additionalProperties: true
+    properties: {}
+  food_security:
+    type: object
+    $schema: http://json-schema.org/draft-07/schema#
+    additionalProperties: true
+    properties: {}
+  food_price:
+    type: object
+    $schema: http://json-schema.org/draft-07/schema#
+    additionalProperties: true
+    properties: {}
+  baseline_population:
+    type: object
+    $schema: http://json-schema.org/schema#
+    additionalProperties: true
+    properties:
+      data:
+        type:
+          - array
+          - 'null'
+        items:
+          type:
+            - object
+            - 'null'
+          properties:
+            admin1_code:
+              type:
+                - string
+                - 'null'
+            admin1_name:
+              type:
+                - string
+                - 'null'
+            admin1_ref:
+              type:
+                - number
+                - 'null'
+            admin2_code:
+              type:
+                - string
+                - 'null'
+            admin2_name:
+              type:
+                - string
+                - 'null'
+            admin2_ref:
+              type:
+                - number
+                - 'null'
+            age_range:
+              type:
+                - string
+                - 'null'
+            gender:
+              type:
+                - string
+                - 'null'
+            location_code:
+              type:
+                - string
+                - 'null'
+            location_name:
+              type:
+                - string
+                - 'null'
+            location_ref:
+              type:
+                - number
+                - 'null'
+            max_age:
+              type:
+                - number
+                - 'null'
+            min_age:
+              type:
+                - number
+                - 'null'
+            population:
+              type:
+                - number
+                - 'null'
+            reference_period_end:
+              type:
+                - string
+                - 'null'
+            reference_period_start:
+              type:
+                - string
+                - 'null'
+            resource_hdx_id:
+              type:
+                - string
+                - 'null'
+  poverty_rate:
+    type: object
+    $schema: http://json-schema.org/schema#
+    additionalProperties: true
+    properties:
+      data:
+        type:
+          - array
+          - 'null'
+        items:
+          type:
+            - object
+            - 'null'
+          properties:
+            admin1_name:
+              type:
+                - string
+                - 'null'
+            headcount_ratio:
+              type:
+                - number
+                - 'null'
+            in_severe_poverty:
+              type:
+                - number
+                - 'null'
+            intensity_of_deprivation:
+              type:
+                - number
+                - 'null'
+            location_code:
+              type:
+                - string
+                - 'null'
+            location_name:
+              type:
+                - string
+                - 'null'
+            location_ref:
+              type:
+                - number
+                - 'null'
+            mpi:
+              type:
+                - number
+                - 'null'
+            reference_period_end:
+              type:
+                - string
+                - 'null'
+            reference_period_start:
+              type:
+                - string
+                - 'null'
+            resource_hdx_id:
+              type:
+                - string
+                - 'null'
+            vulnerable_to_poverty:
+              type:
+                - number
+                - 'null'
